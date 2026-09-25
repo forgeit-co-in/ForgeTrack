@@ -4,13 +4,16 @@ import { useAuth } from '@/context/AuthContext'
 import { Loader2 } from 'lucide-react'
 
 export function Login() {
-  const { session, signIn, loading } = useAuth()
+  const { session, profile, signIn, loading } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
-  if (!loading && session) return <Navigate to="/" replace />
+  // Only leave the login page once we have BOTH a session and a resolved profile.
+  // Redirecting on session alone races with profile loading and can bounce
+  // between "/" and "/login" forever.
+  if (!loading && session && profile) return <Navigate to="/" replace />
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
