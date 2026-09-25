@@ -5,6 +5,7 @@ import { RoleRouter } from '@/routes/RoleRouter'
 import { Login } from '@/pages/Login'
 import { NotFound } from '@/pages/NotFound'
 import { Notifications } from '@/pages/Notifications'
+import { Profile } from '@/pages/Profile'
 
 import { CeoLayout } from '@/layouts/CeoLayout'
 import { CeoDashboard } from '@/pages/ceo/CeoDashboard'
@@ -13,6 +14,7 @@ import { CeoAnalytics } from '@/pages/ceo/Analytics'
 import { CeoReports } from '@/pages/ceo/Reports'
 import { CeoIssues } from '@/pages/ceo/CeoIssues'
 import { CeoFeedback } from '@/pages/ceo/CeoFeedback'
+import { CeoSettings } from '@/pages/ceo/CeoSettings'
 
 import { OfficialLayout } from '@/layouts/OfficialLayout'
 import { OfficialDashboard } from '@/pages/official/OfficialDashboard'
@@ -41,6 +43,8 @@ export default function App() {
               <Route path="issues" element={<CeoIssues />} />
               <Route path="feedback" element={<CeoFeedback />} />
               <Route path="notifications" element={<Notifications />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="settings" element={<CeoSettings />} />
             </Route>
           </Route>
 
@@ -54,6 +58,7 @@ export default function App() {
               <Route path="issues" element={<OfficialIssues />} />
               <Route path="feedback" element={<OfficialFeedback />} />
               <Route path="notifications" element={<Notifications />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
           </Route>
 
