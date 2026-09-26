@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: 15 23 42;
+  --surface: 248 250 252;
+  --card: 255 255 255;
+  --border: 229 233 240;
+  --muted: 100 116 139;
+  --accent: 37 99 235;
+  --brand: 1 68 37;      /* Forgeit dark green */
+  --gold: 225 184 120;   /* Forgeit gold */
+
+  --green: 22 163 74;
+  --green-soft: 220 252 231;
+  --amber: 217 119 6;
+  --amber-soft: 254 243 199;
+  --red: 220 38 38;
+  --red-soft: 254 226 226;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --ink: 241 245 249;
+  --surface: 10 15 13;
+  --card: 17 24 21;
+  --border: 32 41 37;
+  --muted: 148 163 152;
+  --accent: 96 165 250;
+
+  --green: 74 222 128;
+  --green-soft: 20 46 30;
+  --amber: 251 191 36;
+  --amber-soft: 51 39 10;
+  --red: 248 113 113;
+  --red-soft: 51 20 20;
+
+  color-scheme: dark;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  @apply bg-surface text-ink antialiased;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgb(var(--border)); border-radius: 8px; }
+
+.card {
+  @apply bg-card border border-border rounded-xl2 shadow-card;
+}
