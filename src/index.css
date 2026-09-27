@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: 15 23 42;
+  --surface: 248 250 252;
+  --card: 255 255 255;
+  --border: 229 233 240;
+  --muted: 100 116 139;
+  --accent: 37 99 235;
+  --brand: 1 68 37;      /* Forgeit dark green */
+  --gold: 225 184 120;   /* Forgeit gold */
+
+  --green: 22 163 74;
+  --green-soft: 220 252 231;
+  --amber: 217 119 6;
+  --amber-soft: 254 243 199;
+  --red: 220 38 38;
+  --red-soft: 254 226 226;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --ink: 241 245 249;
+  --surface: 10 15 13;
+  --card: 22 30 26;
+  --border: 40 51 45;
+  --muted: 148 163 152;
+  --accent: 96 165 250;
+
+  --green: 74 222 128;
+  --green-soft: 20 46 30;
+  --amber: 251 191 36;
+  --amber-soft: 51 39 10;
+  --red: 248 113 113;
+  --red-soft: 51 20 20;
+
+  color-scheme: dark;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  @apply bg-surface text-ink antialiased;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+}
+
+/* Soft ambient glow behind the UI so glass surfaces have something to read through. */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  width: 42vw;
+  height: 42vw;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.16;
+}
+body::before {
+  top: -10%;
+  left: -8%;
+  background: rgb(var(--brand));
+}
+body::after {
+  bottom: -14%;
+  right: -10%;
+  background: rgb(var(--accent));
+}
+:root[data-theme='dark'] body::before,
+:root[data-theme='dark'] body::after {
+  opacity: 0.22;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgb(var(--border)); border-radius: 8px; }
+
+/* Glassmorphism surface, used by .card, sidebars and the mobile nav. */
+.glass {
+  background: rgb(var(--card) / 0.68);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgb(var(--border) / 0.6);
+}
+
+.card {
+  @apply glass rounded-xl2 shadow-card transition-shadow duration-200;
+}
+
+/* ===== Motion system ===== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-enter {
+  animation: page-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .page-enter {
+    animation: none !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
